@@ -1,0 +1,8 @@
+{
+  "title" : "Post 2",
+  "slug": "post_2",
+  "body": "post de prueba numero 1 a ver qué pasa",
+  "metaDescription": "descripion post 2",
+  "category": ["yoga", "tantra"],
+  "published": true
+}
