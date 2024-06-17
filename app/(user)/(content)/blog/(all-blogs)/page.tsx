@@ -6,6 +6,8 @@ import { IconPlus } from "@/components/icons";
 import { blogsColumn } from "./blogs-table/blogs-column";
 import { getAuthSession } from "@/lib/next-auth";
 // import { getBlogs } from "@/db/user/queries/get-blogs";
+import { getBlogs } from "@/lib/services/queries/get-blogs";
+import { deleteBlog } from "@/lib/services/queries/delete-blog";
 
 // import { deleteBlog } from "@/db/user/mutations/delete-blog";
 
@@ -22,7 +24,8 @@ export default async function BlogPage({
 
   if (!session) return;
 
-  const userId = session.user.id;
+  //TODO why error
+  const userId = session?.user.id;
 
   const limitNumber = Number(limit);
   const pageNumber = Number(page);

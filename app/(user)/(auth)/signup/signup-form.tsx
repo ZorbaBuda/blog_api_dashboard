@@ -10,7 +10,7 @@ import { Spinner } from "@/components/spinner";
 import { UsernameField } from "@/components/form-fields/username-field";
 import { EmailField } from "@/components/form-fields/email-field";
 import { PasswordField } from "@/components/form-fields/password-field";
-import { userSignup } from "@/db/user/mutations/user-signup";
+import { userSignup } from "@/lib/services/mutations/user-signup";
 import { SignupProps, signupSchema } from "@/schemas/signup-schema";
 
 export default function UserSignupForm() {

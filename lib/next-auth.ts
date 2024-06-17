@@ -3,7 +3,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcrypt"
 // import { prisma } from "@/lib/prisma";
 import { SigninProps, signinSchema } from "@/schemas/signin-schema";
-import getUserById from "@/lib/services/getUserById"
+import getUserById from "@/lib/services/queries/getUserById"
 
 export const authOptions: NextAuthOptions = {
   session: {
@@ -33,7 +33,7 @@ export const authOptions: NextAuthOptions = {
           
           const response = await getUserById(email)
 
-           console.log("response 👋", response);
+          //  console.log("response 👋", response);
 
           if (!response) {
             throw new Error("Incorrect Email");
@@ -49,53 +49,33 @@ export const authOptions: NextAuthOptions = {
           }
 
           const user = {
-            id: "10",
-            username: "1",
-            email: "1@gmail.com",
-            logoUrl: "hey",
-            role: "GUEST_USER",
+            id: response.id,
+            username: response.username,
+            email: response.email,
+            logoUrl: response.logoUrl,
+            role: response.role,
           };
-
-          // const user = {
-          //   id: response.id,
-          //   username: response.username,
-          //   email: response.email,
-          //   logoUrl: response.logoUrl,
-          //   role: response.role,
-          // };
 
           return user;
         }
 
         if (role === "GUEST_USER") {
-          // const response = await getUserById("igniteweb@email.com")
-          // const response = await prisma.user.findUnique({
-          //   where: {
-          //     email: "igniteweb@email.com",
-          //   },
-          // });
 
-          // console.log("response", response);
-
-          // if (!response) {
-          //   throw new Error("Incorrect Email");
-          // }
-
+          const response = await getUserById("igniteweb@email.com")
         
+           console.log("response", response);
+
+          if (!response) {
+            throw new Error("Incorrect Email");
+          }
+
           const user = {
-            id: "10",
-            username: "1",
-            email: "1@gmail.com",
+            id: response.id,
+            username: response.username,
+            email: response.email,
+            logoUrl: response.logoUrl,
             role: "GUEST_USER",
           };
-
-          //   const user = {
-          //   id: 10,
-          //   username: "guest",
-          //   email: "guest@gmail.com",
-          //   logoUrl: "pic10",
-          //   role: "GUEST_USER",
-          // };
 
           return user;
         }

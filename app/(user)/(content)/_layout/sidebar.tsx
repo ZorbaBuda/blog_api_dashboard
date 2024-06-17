@@ -3,8 +3,8 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-// import { signOut } from "next-auth/react";
-// import { IconLogout } from "@/components/icons";
+import { signOut } from "next-auth/react";
+import { IconLogout } from "@/components/icons";
 import LogoUploadModal from "@/components/modals/logo-upload-modal";
 import ContentBoardLogo from "@/components/logo/content-board";
 import DarkMode from "./dark-mode";
@@ -33,11 +33,11 @@ export default function UserSidebar({
     return () => document.body.classList.remove("overflow-y-hidden");
   }, [showSidebar]);
 
-  // const handleSignout = () => {
-  //   signOut({
-  //     callbackUrl: `${window.location.origin}${pathname}`,
-  //   });
-  // };
+  const handleSignout = () => {
+    signOut({
+      callbackUrl: `${window.location.origin}${pathname}`,
+    });
+  };
 
   const isActive = (path: string) => {
     if (path === "/" && pathname === path) {
@@ -136,11 +136,11 @@ export default function UserSidebar({
               <button
                 type="button"
                 className={`w-full px-6 py-2 flex justify-between items-center group font-semibold transition-colors duration-200 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700`}
-                // onClick={handleSignout}
+                 onClick={handleSignout}
               >
                 <div className="flex items-center gap-3">
                   <span className="text-primary">
-                    {/* <IconLogout /> */}
+                    <IconLogout />
                   </span>
                   <p>Sign out</p>
                 </div>
