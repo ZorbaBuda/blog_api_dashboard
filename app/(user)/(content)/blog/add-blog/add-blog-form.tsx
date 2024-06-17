@@ -18,11 +18,12 @@ import { TextEditorField } from "@/components/form-fields/text-editor-field";
 import { addBlog } from "@/lib/services/mutations/add-blog";
 import { BlogProps, blogSchema } from "@/schemas/blog-schema";
 import { getDescription } from "@/utils/get-description";
+import { ICategoryDocument } from "@/lib/models/category";
 
 export default function AddBlogForm({
   categories,
 }: {
-  categories: Category[];
+  categories: ICategoryDocument[];
 }) {
   const [showImageModal, setShowImageModal] = useState(false);
   const router = useRouter();

@@ -1,6 +1,6 @@
 "use client";
 
-import type { Category } from "@prisma/client";
+// import type { Category } from "@prisma/client";
 import { useState } from "react";
 import { toast } from "sonner";
 import { Row } from "@tanstack/react-table";
@@ -15,14 +15,15 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { DeleteModal } from "@/components/modals/delete-modal";
 import { EditCategoryModal } from "@/components/modals/edit-category-modal";
-import { deleteCategory } from "@/db/user/mutations/delete-category";
+import { deleteCategory } from "@/lib/services/mutations/delete-category";
+import { ICategoryDocument } from "@/lib/models/category";
 
 interface CategoryAction<TData> {
   row: Row<TData>;
 }
 
 export function CategoryAction<TData>({ row }: CategoryAction<TData>) {
-  const category = row.original as Category;
+  const category = row.original as ICategoryDocument;
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);

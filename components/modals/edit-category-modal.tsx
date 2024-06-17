@@ -1,20 +1,21 @@
-import type { Category } from "@prisma/client";
+// import type { Category } from "@prisma/client";
 import { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import slugify from "slugify";
 import { toast } from "sonner";
 import { AlertDialog, AlertDialogContent } from "@/components/ui/alert-dialog";
-import { ScrollArea } from "../ui/scroll-area";
+import { ScrollArea } from "@radix-ui/react-scroll-area";
 import { Spinner } from "@/components/spinner";
 import { Button } from "@/components/ui/button";
 import { InputField } from "@/components/form-fields/input-field";
 import { TextareaField } from "@/components/form-fields/textarea-field";
-import { editCategory } from "@/db/user/mutations/edit-category";
+import { editCategory } from "@/lib/services/mutations/edit-category";
 import { CategoryProps, categorySchema } from "@/schemas/category-schema";
+import { ICategoryDocument } from "@/lib/models/category";
 
 type EditCategoryModalProps = {
-  category: Category;
+  category: ICategoryDocument;
   showEditModal: boolean;
   setShowEditModal: (arg: boolean) => void;
 };

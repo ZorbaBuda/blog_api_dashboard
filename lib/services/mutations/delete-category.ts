@@ -1,0 +1,75 @@
+"use server";
+
+import { revalidatePath } from "next/cache";
+import { getAuthSession } from "@/lib/next-auth";
+import connect from "@/lib/db";
+import Category from "@/lib/models/category";
+
+export async function deleteCategory({
+  deleteId,
+}: {
+  deleteId: string | string[];
+}) {
+  const session = await getAuthSession();
+
+  const isUser = session?.user.role === "USER";
+
+  if (!isUser) {
+    return { error: "Unauthorized" };
+  }
+
+  if (!deleteId) {
+    return { error: "Need to pass category Id" };
+  }
+
+  const userId = session.user.id;
+
+  await connect()
+  
+  if (typeof deleteId === "string") {
+    try {
+      const response = await Category.deleteOne({
+        where: {
+          id_userId: {
+            id: deleteId,
+            userId,
+          },
+        },
+      });
+
+      revalidatePath("/", "layout");
+
+      return {
+        // success: `Category ${response.categoryName} deleted`,
+        success: `Category  deleted`,
+        data: response,
+      };
+    } catch (error) {
+      return { error: "Something went wrong", data: error };
+    }
+  }
+
+  if (Array.isArray(deleteId)) {
+    try {
+      const response = await Category.deleteMany({
+        where: {
+          id: {
+            in: deleteId,
+          },
+          userId,
+        },
+      });
+
+      revalidatePath("/", "layout");
+
+      return {
+        success: `${deleteId.length} categories deleted`,
+        data: response,
+      };
+    } catch (error) {
+      return { error: "Something went wrong", data: error };
+    }
+  }
+}
+
+export type DeleteCategoryProps = typeof deleteCategory;

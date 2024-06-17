@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import CategoryForm from "./category-form";
 import { getAuthSession } from "@/lib/next-auth";
-import { getCategories } from "@/db/user/queries/get-categories";
+import { getCategories } from "@/lib/services/queries/get-categories";
 import { DataTable } from "@/components/data-table";
-import { deleteCategory } from "@/db/user/mutations/delete-category";
+import { deleteCategory } from "@/lib/services/mutations/delete-category";
 import { categoriesColumn } from "./categories-table/categories-column";
 
 export const metadata: Metadata = {

@@ -2,6 +2,7 @@
 
 import connect from "@/lib/db";
 import Blog from "@/lib/models/blog";
+import Media from "@/lib/models/media";
 import { getAuthSession } from "@/lib/next-auth";
 // import { prisma } from "@/lib/prisma";
 import { BlogProps, blogSchema } from "@/schemas/blog-schema";
@@ -44,7 +45,7 @@ export async function addBlog({ values }: { values: BlogProps }) {
   const escapedTitle = escapeStringRegexp(title);
   const escapedSlug = escapeStringRegexp(slug);
 
-  const titleExist = await prisma.blog.findFirst({
+  const titleExist = await Blog.find({
     where: {
       title: {
         equals: escapedTitle,
@@ -60,7 +61,7 @@ export async function addBlog({ values }: { values: BlogProps }) {
     return { error: "Title already exists", errorType: "title" };
   }
 
-  const slugExist = await prisma.blog.findFirst({
+  const slugExist = await Blog.find({
     where: {
       slug: {
         equals: escapedSlug,
@@ -77,7 +78,7 @@ export async function addBlog({ values }: { values: BlogProps }) {
   }
 
   try {
-    const response = await prisma.blog.create({
+    const response = await Blog.create({
       data: {
         title,
         slug,
@@ -97,7 +98,7 @@ export async function addBlog({ values }: { values: BlogProps }) {
     });
 
     if (response.id) {
-      const imageExist = await prisma.media.findFirst({
+      const imageExist = await Media.find({
         where: {
           imageUrl: featuredImage.imageUrl,
           AND: {
@@ -108,7 +109,7 @@ export async function addBlog({ values }: { values: BlogProps }) {
 
       const responseMedia =
         !imageExist &&
-        (await prisma.media.create({
+        (await Media.create({
           data: {
             ...featuredImage,
             userId: userId,
@@ -118,7 +119,7 @@ export async function addBlog({ values }: { values: BlogProps }) {
       if (bodyImages) {
         const imagesUrl = bodyImages.map((image) => image.imageUrl);
 
-        const imagesExist = await prisma.media.findMany({
+        const imagesExist = await Media.find({
           where: {
             imageUrl: {
               in: imagesUrl,
@@ -142,7 +143,7 @@ export async function addBlog({ values }: { values: BlogProps }) {
 
         const responseMedias =
           imagesToSubmit.length > 0 &&
-          (await prisma.media.createMany({
+          (await Media.create({
             data: imagesToSubmit,
           }));
 

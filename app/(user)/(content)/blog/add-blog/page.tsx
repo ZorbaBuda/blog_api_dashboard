@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { getCategories } from "@/db/user/queries/get-categories";
+import { getCategories } from "@/lib/services/queries/get-categories";
 import { getAuthSession } from "@/lib/next-auth";
 import AddBlogForm from "./add-blog-form";
 

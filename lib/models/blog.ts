@@ -16,6 +16,10 @@ const BlogSchema = new Schema({
     required: true,
     minLength:20,
   },
+  author: {
+    type:String,
+    required: true
+  },
   metaDescription: {
     type: String,
     required: true,
@@ -30,13 +34,17 @@ const BlogSchema = new Schema({
     type: Date,
     default: () => Date.now(),
   },
-  category: {
+  categories: {
     type: Array,
     required: true,
   },
   published: {
     type: Boolean,
     required:true
+  },
+  bodyImages: {
+    type: Array,
+    required: false
   }
 });
 const Blog = models.Blog || model('Blog', BlogSchema);

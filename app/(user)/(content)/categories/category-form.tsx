@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/spinner";
 import { InputField } from "@/components/form-fields/input-field";
 import { TextareaField } from "@/components/form-fields/textarea-field";
-import { addCategory } from "@/db/user/mutations/add-category";
+import { addCategory } from "@/lib/services/mutations/add-category";
 import { CategoryProps, categorySchema } from "@/schemas/category-schema";
 
 export default function CategoryForm() {
