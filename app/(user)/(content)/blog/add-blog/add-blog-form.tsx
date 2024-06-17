@@ -1,6 +1,6 @@
 "use client";
 
-import type { Category } from "@prisma/client";
+// import type { Category } from "@prisma/client";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -15,7 +15,7 @@ import { InputField } from "@/components/form-fields/input-field";
 import { Spinner } from "@/components/spinner";
 import ImageUploadModal from "@/components/modals/image-upload-modal";
 import { TextEditorField } from "@/components/form-fields/text-editor-field";
-import { addBlog } from "@/db/user/mutations/add-blog";
+import { addBlog } from "@/lib/services/mutations/add-blog";
 import { BlogProps, blogSchema } from "@/schemas/blog-schema";
 import { getDescription } from "@/utils/get-description";
 

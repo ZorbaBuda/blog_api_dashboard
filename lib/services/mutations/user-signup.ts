@@ -9,7 +9,7 @@ import { signupSchema, SignupProps } from "@/schemas/signup-schema";
 
 export async function userSignup({ values }: { values: SignupProps }) {
 
-    console.log(values, '❤')
+    // console.log(values, '❤')
   const parsedBody = signupSchema.safeParse(values);
 
   if (!parsedBody.success) {
@@ -48,11 +48,9 @@ export async function userSignup({ values }: { values: SignupProps }) {
 
   try {
     const response = await User.create({
-    
         username,
         email,
         password: hashedPassword,
-     
     });
 
     if (response.id) {
