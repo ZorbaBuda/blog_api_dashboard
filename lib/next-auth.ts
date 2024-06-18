@@ -63,7 +63,7 @@ export const authOptions: NextAuthOptions = {
 
           const response = await getUserById("igniteweb@email.com")
         
-           console.log("response", response);
+          //  console.log("response", response);
 
           if (!response) {
             throw new Error("Incorrect Email");
@@ -117,7 +117,7 @@ export const authOptions: NextAuthOptions = {
 
   callbacks: {
     jwt: ({ token, user, trigger, session }) => {
-       console.log("token", token);
+      //  console.log("token", token);
 
       if (trigger === "update") {
         token.user = session.user;

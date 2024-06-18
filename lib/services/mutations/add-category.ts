@@ -34,19 +34,23 @@ export async function addCategory({ values }: { values: CategoryProps }) {
 
   await connect()
 
-  const categoryExist = await Category.find({
-    where: {
-      categoryName: {
-        equals: escapedCategoryName,
-        mode: "insensitive",
-      },
-      AND: {
-        userId,
-      },
-    },
-  });
+  const categoryExist = await Category.find({categoryName, userId})
 
-  if (categoryExist) {
+  // const categoryExist = await Category.find({
+  //   where: {
+  //     categoryName: {
+  //       equals: escapedCategoryName,
+  //       mode: "insensitive",
+  //     },
+  //     AND: {
+  //       userId,
+  //     },
+  //   },
+  // });
+  console.log(categoryExist)
+  console.log(categoryExist.length)
+
+  if (categoryExist.length > 0) {
     return { error: "Category already exists", errorType: "categoryName" };
   }
 
@@ -62,18 +66,18 @@ export async function addCategory({ values }: { values: CategoryProps }) {
     },
   });
 
-  if (slugExist) {
+  if (slugExist.length > 0) {
     return { error: "Category slug already exists", errorType: "slug" };
   }
 
   try {
     const response = await Category.create({
-      data: {
+     
         categoryName,
         slug,
         description,
         userId,
-      },
+   
     });
 
     revalidatePath("/", "layout");

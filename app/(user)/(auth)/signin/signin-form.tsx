@@ -43,7 +43,7 @@ export default function UserSigninForm() {
       redirect: false,
     });
 
-     console.log("response", response);
+    //  console.log("response", response);
 
     if (!response?.error) {
       console.log("succcess", response);
@@ -53,7 +53,7 @@ export default function UserSigninForm() {
       // router.push(callback_url);
       window.location.assign(callback_url);
     } else {
-      console.log("error", response);
+      // console.log("error", response);
       //  const errorType = result?.errorType as ErrorType;
 
       const emailError = response?.error === "Incorrect Email";

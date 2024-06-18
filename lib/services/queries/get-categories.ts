@@ -53,32 +53,43 @@ export async function getCategories({
   const skip = (currentPage - 1) * (limitNumber || PER_PAGE) || 0;
 
   await connect() 
+
+  const result = await Category.find({userId})
+     .sort("createdAt")
   
-  const categories = await Category.find({
-    orderBy: sorting || {
-      createdAt: "desc",
-    },
-    where: {
-      userId: userId,
-      categoryName: {
-        startsWith: escapedCategoryName,
-        mode: "insensitive",
-      },
-    },
+  // const categories = await Category.find({
+  //   // orderBy: sorting || {
+  //   //   createdAt: "desc",
+  //   // },
+  //   where: {
+  //     userId: userId,
+  //     // categoryName: {
+  //     //   startsWith: escapedCategoryName,
+  //     //   mode: "insensitive",
+  //     // },
+  //   },
 
-    take: take,
-    skip: skip,
-  });
+  //   take: take,
+  //   skip: skip,
+  // }).sort('createdAt');
 
-  const categoriesCount = await Category.countDocuments({
-    where: {
-      userId: userId,
-      categoryName: {
-        startsWith: escapedCategoryName,
-        mode: "insensitive",
-      },
-    },
-  });
+  // const categories = await Category.find()
+
+  const categoriesCount = await Category.countDocuments({userId})
+
+  // const categoriesCount = await Category.countDocuments({
+  //   where: {
+  //     userId: userId,
+  //     categoryName: {
+  //       startsWith: escapedCategoryName,
+  //       mode: "insensitive",
+  //     },
+  //   },
+  // });
+
+//   console.log(categories)
+// console.log(categoriesCount)
+const categories = JSON.parse(JSON.stringify(result))
 
   return { categories, categoriesCount };
 }
