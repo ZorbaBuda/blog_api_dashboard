@@ -1,18 +1,18 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-// import { useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import Cropper from "react-easy-crop";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
-// import { changeLogo } from "@/db/user/mutations/change-logo";
+import { changeLogo } from "@/lib/services/mutations/change-logo";
 import { Spinner } from "@/components/spinner";
 import { Slider } from "@/components/ui/slider";
 import { getCroppedImg } from "./canvasUtils";
-// import {
-//   CLOUDINARY_CLOUD_NAME,
-//   CLOUDINARY_FOLDER,
-//   CLOUDINARY_UPLOAD_PRESET,
-// } from "@/config";
+import {
+  CLOUDINARY_CLOUD_NAME,
+  CLOUDINARY_FOLDER,
+  CLOUDINARY_UPLOAD_PRESET,
+} from "@/config";
 
 // const ORIENTATION_TO_ANGLE = {
 //   '3': 180,
@@ -40,10 +40,9 @@ export default function LogoUploadModal({
   const [imageUploading, setImageUploading] = useState(false);
   const [showResizeModal, setShowResizeModal] = useState(false);
 
-  // const { data: session, update } = useSession();
-  // const isUser = session?.user.role === "USER";
-  const isUser = true
-
+  const { data: session, update } = useSession();
+  const isUser = session?.user.role === "USER";
+ 
   const router = useRouter();
 
   useEffect(() => {
@@ -102,73 +101,74 @@ export default function LogoUploadModal({
       return;
     }
 
-    // try {
-    //   const croppedImage = await getCroppedImg(
-    //     imageSrc,
-    //     croppedAreaPixels
-    //     // rotation
-    //   );
+    try {
+      const croppedImage = await getCroppedImg(
+        imageSrc,
+        croppedAreaPixels
+        // rotation
+      );
 
-    //   if (!croppedImage) return;
+      if (!croppedImage) return;
 
-    //   const formData = new FormData();
-    //   formData.append("file", croppedImage);
-    //   // formData.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
-    //   // formData.append("cloud_name", CLOUDINARY_CLOUD_NAME);
-    //   // formData.append("folder", CLOUDINARY_FOLDER);
+      const formData = new FormData();
+      formData.append("file", croppedImage);
+      formData.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
+      formData.append("cloud_name", CLOUDINARY_CLOUD_NAME);
+      formData.append("folder", CLOUDINARY_FOLDER);
 
-    //   setImageUploading(true);
+      setImageUploading(true);
 
-    //   const cloudinary_url = `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`;
+      const cloudinary_url = `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`;
 
-    //   try {
-    //     const response = await fetch(cloudinary_url, {
-    //       method: "POST",
-    //       body: formData,
-    //     });
+      try {
+        const response = await fetch(cloudinary_url, {
+          method: "POST",
+          body: formData,
+        });
 
-    //     const data = await response.json();
+        const data = await response.json();
 
-    //     if (response.ok) {
-    //       const values = {
-    //         logoId: data.public_id,
-    //         logoUrl: data.secure_url,
-    //       };
+        if (response.ok) {
+          const values = {
+            logoId: data.public_id,
+            logoUrl: data.secure_url,
+          };
 
-    //       const result = await changeLogo({ values });
+          const result = await changeLogo({ values });
 
-    //       // console.log("result", result);
+          console.log("result", result);
 
-    //       if (result.success) {
-    //         toast.success(result.success);
+          if (result.success) {
+            toast.success(result.success);
 
-    //         await update({
-    //           ...session,
-    //           user: {
-    //             ...session?.user,
-    //             logoUrl: result.data.logoUrl,
-    //           },
-    //         });
+            //TODO uncomment
+            // await update({
+            //   ...session,
+            //   user: {
+            //     ...session?.user,
+            //     logoUrl: result.data.logoUrl,
+            //   },
+            // });
 
-    //         router.refresh();
+            router.refresh();
 
-    //         closeModal();
-    //       } else {
-    //         console.log("error", data);
-    //         closeModal();
-    //         toast.error("Image upload failed, try again");
-    //       }
-    //     }
-    //   } catch (error) {
-    //     console.log("error", error);
-    //     closeModal();
-    //     toast.error("Image upload failed, try again");
-    //   }
+            closeModal();
+          } else {
+            console.log("error", data);
+            closeModal();
+            toast.error("Image upload failed, try again");
+          }
+        }
+      } catch (error) {
+        console.log("error", error);
+        closeModal();
+        toast.error("Image upload failed, try again");
+      }
 
-    //   setImageUploading(false);
-    // } catch (e) {
-    //   console.error(e);
-    // }
+      setImageUploading(false);
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   return (

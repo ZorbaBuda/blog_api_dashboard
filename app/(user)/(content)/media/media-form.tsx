@@ -1,4 +1,4 @@
-import type { Media } from "@prisma/client";
+import type { IMediaDocument } from "@/lib/models/media";
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
@@ -6,11 +6,11 @@ import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/spinner";
 import { InputField } from "@/components/form-fields/input-field";
 import { TextareaField } from "@/components/form-fields/textarea-field";
-import { editMedia } from "@/db/user/mutations/edit-media";
+import { editMedia } from "@/lib/services/mutations/edit-media";
 import { MediaProps, mediaSchema } from "@/schemas/media-schema";
 
 type MediaFormProps = {
-  selectedImage: Media;
+  selectedImage: IMediaDocument;
   setImageTitleState: React.Dispatch<React.SetStateAction<string>>;
 };
 

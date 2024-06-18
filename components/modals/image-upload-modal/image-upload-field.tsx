@@ -64,6 +64,9 @@ export default function ImageUploadField({
 
     setImageUploading(true);
 
+    console.log("formData", formData)
+
+
     const cloudinary_url = `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`;
 
     try {
@@ -73,6 +76,8 @@ export default function ImageUploadField({
       });
 
       const data = await response.json();
+      console.log("🚀",response)
+      console.log(data)
 
       if (response.ok) {
         setImageUrl(data.secure_url);

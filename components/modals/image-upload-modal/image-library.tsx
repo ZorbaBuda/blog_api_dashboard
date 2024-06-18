@@ -3,7 +3,7 @@ import Image from "next/image";
 import { IconTick } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import type { Media } from "@prisma/client";
+import { IMediaDocument } from "@/lib/models/media";
 import { MediaProps } from "@/schemas/media-schema";
 import useFetchData from "@/hooks/use-fetch-data";
 import { SpinnerContent } from "@/components/spinner";
@@ -17,12 +17,12 @@ export default function ImageLibrary({
   setShowImageModal,
   handleImageSubmit,
 }: ImageLibraryProps) {
-  const [selectedImage, setSelectedImage] = useState<null | Media>(null);
+  const [selectedImage, setSelectedImage] = useState<null | IMediaDocument>(null);
 
   const { data, isLoading, error } = useFetchData("/api/medias");
-  const medias: Media[] = data;
+  const medias: IMediaDocument[] = data;
 
-  const handleImageClick = (media: Media) => {
+  const handleImageClick = (media: IMediaDocument) => {
     if (selectedImage?.id === media.id) {
       setSelectedImage(null);
     } else {

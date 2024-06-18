@@ -1,6 +1,24 @@
-import { Schema, model, models } from 'mongoose';
+import { Schema, model, Model, Document, models } from 'mongoose';
+import { IMediaDocument } from './media';
 
-const BlogSchema = new Schema({
+export interface IBlog {
+  title: string,
+  slug: string,
+  body: string,
+  author:string,
+  metaDescription:string,
+  categories: String[],
+  published: boolean,
+  bodyImages: string[],
+  featuredImage: IMediaDocument
+}
+
+export interface IBlogDocument extends IBlog, Document {
+  createdAt: Date,
+  updatedAt: Date
+}
+
+const BlogSchema = new Schema<IBlogDocument>({
   title: {
     type: String,
     required: true,
@@ -45,6 +63,9 @@ const BlogSchema = new Schema({
   bodyImages: {
     type: Array,
     required: false
+  },
+  featuredImage: {
+    type: 
   }
 });
 const Blog = models.Blog || model('Blog', BlogSchema);

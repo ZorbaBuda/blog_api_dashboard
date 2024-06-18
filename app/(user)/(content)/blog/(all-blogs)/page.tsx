@@ -7,7 +7,7 @@ import { blogsColumn } from "./blogs-table/blogs-column";
 import { getAuthSession } from "@/lib/next-auth";
 // import { getBlogs } from "@/db/user/queries/get-blogs";
 import { getBlogs } from "@/lib/services/queries/get-blogs";
-import { deleteBlog } from "@/lib/services/queries/delete-blog";
+import { deleteBlog } from "@/lib/services/mutations/delete-blog";
 
 // import { deleteBlog } from "@/db/user/mutations/delete-blog";
 

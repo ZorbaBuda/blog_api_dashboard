@@ -4,7 +4,7 @@ import parser from "html-react-parser";
 import { ClientFormattedDate } from "@/components/formats/client-formatted-date";
 import BackButton from "@/components/back-button";
 import { getAuthSession } from "@/lib/next-auth";
-import { getSingleBlog } from "@/db/user/queries/get-single-blog";
+import { getSingleBlog } from "@/lib/services/queries/get-single-blog";
 import "@/public/styles/blog.css";
 
 export default async function BlogViewpage({

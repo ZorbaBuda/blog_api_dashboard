@@ -1,10 +1,10 @@
-import type { Media } from "@prisma/client";
+import type { IMediaDocument } from "@/lib/models/media";
 import { useState } from "react";
 import { toast } from "sonner";
 import { Trash2 } from "lucide-react";
 import { DeleteModal } from "@/components/modals/delete-modal";
 import { Button } from "@/components/ui/button";
-import { deleteMedia } from "@/db/user/mutations/delete-media";
+import { deleteMedia } from "@/lib/services/mutations/delete-media";
 
 export default function MediaDelete({
   imageTitleState,
@@ -12,8 +12,8 @@ export default function MediaDelete({
   setSelectedImage,
 }: {
   imageTitleState: string;
-  selectedImage: Media;
-  setSelectedImage: React.Dispatch<React.SetStateAction<Media | null>>;
+  selectedImage: IMediaDocument;
+  setSelectedImage: React.Dispatch<React.SetStateAction<IMediaDocument | null>>;
 }) {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);

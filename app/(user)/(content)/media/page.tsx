@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import MediaGallery from "./media-gallery";
 import { getAuthSession } from "@/lib/next-auth";
-import { getMedias } from "@/db/user/queries/get-medias";
+import { getMedias } from "@/lib/services/queries/get-medias";
 
 export const metadata: Metadata = {
   title: "Media",

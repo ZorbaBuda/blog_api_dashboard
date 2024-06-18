@@ -45,19 +45,24 @@ export async function addBlog({ values }: { values: BlogProps }) {
   const escapedTitle = escapeStringRegexp(title);
   const escapedSlug = escapeStringRegexp(slug);
 
-  const titleExist = await Blog.find({
-    where: {
-      title: {
-        equals: escapedTitle,
-        mode: "insensitive",
-      },
-      AND: {
-        userId,
-      },
-    },
-  });
+  await connect()
 
-  if (titleExist) {
+  // const titleExist = await Blog.find({
+  //   where: {
+  //     title: {
+  //       equals: escapedTitle,
+  //       mode: "insensitive",
+  //     },
+  //     AND: {
+  //       userId,
+  //     },
+  //   },
+  // });
+
+  const titleExist = await Blog.find({escapedTitle, userId})
+  console.log(titleExist)
+
+  if (titleExist.length > 0) {
     return { error: "Title already exists", errorType: "title" };
   }
 
@@ -73,13 +78,13 @@ export async function addBlog({ values }: { values: BlogProps }) {
     },
   });
 
-  if (slugExist) {
+  if (slugExist.length > 0) {
     return { error: "Slug already exists", errorType: "slug" };
   }
 
   try {
     const response = await Blog.create({
-      data: {
+    
         title,
         slug,
         body,
@@ -94,7 +99,7 @@ export async function addBlog({ values }: { values: BlogProps }) {
           altText: featuredImage.altText,
         },
         userId: userId,
-      },
+      
     });
 
     if (response.id) {

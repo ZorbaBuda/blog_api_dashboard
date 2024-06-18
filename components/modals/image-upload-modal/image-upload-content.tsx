@@ -18,6 +18,7 @@ function ImageUploadContent({
   imageSubmitting,
 }: ImageUploadContentProps) {
   const [imageUploaded, setImageUploaded] = useState(false);
+  console.log(imageUploaded)
   const [imageUploading, setImageUploading] = useState(false);
 
   const imageOptions = ["Upload Your Image", "Choose From Library"];

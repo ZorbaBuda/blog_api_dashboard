@@ -1,6 +1,7 @@
 "use client";
 
-import type { Media } from "@prisma/client";
+// import type { Media } from "@prisma/client";
+import { IMediaDocument } from "@/lib/models/media";
 import { useState } from "react";
 import Image from "next/image";
 import { toast } from "sonner";
@@ -11,12 +12,12 @@ import { Button } from "@/components/ui/button";
 import ImageUploadModal from "@/components/modals/image-upload-modal";
 import MediaDetails from "./media-details";
 import { DeleteModal } from "@/components/modals/delete-modal";
-import { addMedia } from "@/db/user/mutations/add-media";
-import { deleteMedia } from "@/db/user/mutations/delete-media";
+import { addMedia } from "@/lib/services/mutations/add-media";
+import { deleteMedia } from "@/lib/services/mutations/delete-media";
 import { MediaProps } from "@/schemas/media-schema";
 
-export default function MediaGallery({ medias }: { medias: Media[] }) {
-  const [selectedImage, setSelectedImage] = useState<Media | null>(null);
+export default function MediaGallery({ medias }: { medias: IMediaDocument[] }) {
+  const [selectedImage, setSelectedImage] = useState<IMediaDocument | null>(null);
   const [selectedMultipleImages, setSelectedMultipleImages] = useState<
     string[]
   >([]);
@@ -28,7 +29,7 @@ export default function MediaGallery({ medias }: { medias: Media[] }) {
 
   const [imageSubmitting, setImageSubmitting] = useState(false);
 
-  const handleImageClick = (media: Media) => {
+  const handleImageClick = (media: IMediaDocument) => {
     if (isMultipleSelect) {
       toggleSelectedImage(media);
     } else {
@@ -40,7 +41,7 @@ export default function MediaGallery({ medias }: { medias: Media[] }) {
     }
   };
 
-  const toggleSelectedImage = (media: Media) => {
+  const toggleSelectedImage = (media: IMediaDocument) => {
     const isSelected = selectedMultipleImages.some(
       (selectedMedia) => selectedMedia === media.id
     );
@@ -53,6 +54,7 @@ export default function MediaGallery({ medias }: { medias: Media[] }) {
       setSelectedMultipleImages([...selectedMultipleImages, media.id]);
     }
   };
+  
 
   const handleImageSubmit = async (imageValues: MediaProps) => {
     setImageSubmitting(true);
