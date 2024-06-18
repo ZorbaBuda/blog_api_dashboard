@@ -10,7 +10,7 @@ export interface IBlog {
   categories: String[],
   published: boolean,
   bodyImages: string[],
-  featuredImage: IMediaDocument
+  featuredImage: FeaturedImage
 }
 
 export interface IBlogDocument extends IBlog, Document {
@@ -53,7 +53,7 @@ const BlogSchema = new Schema<IBlogDocument>({
     default: () => Date.now(),
   },
   categories: {
-    type: Array,
+    type: [String],
     required: true,
   },
   published: {
@@ -61,13 +61,18 @@ const BlogSchema = new Schema<IBlogDocument>({
     required:true
   },
   bodyImages: {
-    type: Array,
+    type: [String],
     required: false
   },
   featuredImage: {
-    type: 
+    type: Object,
+    required: true
   }
-});
+},
+{
+  timestamps: true
+} 
+);
 const Blog = models.Blog || model('Blog', BlogSchema);
 
 export default Blog;

@@ -102,6 +102,8 @@ export async function addBlog({ values }: { values: BlogProps }) {
       
     });
 
+    console.log(response, '😜')
+
     if (response.id) {
       const imageExist = await Media.find({
         where: {
@@ -113,12 +115,12 @@ export async function addBlog({ values }: { values: BlogProps }) {
       });
 
       const responseMedia =
-        !imageExist &&
+        !(imageExist.length > 0)  &&
         (await Media.create({
-          data: {
+         
             ...featuredImage,
             userId: userId,
-          },
+        
         }));
 
       if (bodyImages) {
@@ -163,6 +165,7 @@ export async function addBlog({ values }: { values: BlogProps }) {
       data: response,
     };
   } catch (error) {
-    return { error: "Something went wrong", data: error };
+    // return { error: "Something went wrong", data: error };
+    console.log(error)
   }
 }
