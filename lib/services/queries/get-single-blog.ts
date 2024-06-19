@@ -12,17 +12,21 @@ export async function getSingleBlog({
 
   await connect() 
 
-  const response  = await Blog.findOne({userId: userId, slug: decodedSlug})
+  const blog  = await Blog.findOne({userId: userId, slug: decodedSlug})
   // const blog = await prisma.blog.findFirst({
   //   where: {
   //     userId: userId,
   //     slug: decodedSlug,
   //   },
   // });
+ 
 
   // console.log(blog)
 
-   const blog = JSON.parse(JSON.stringify(response))
+   if(!blog) return null
 
-  return { response };
+   
+  //  const blog = JSON.parse(JSON.stringify(response))
+
+  return  blog ;
 }

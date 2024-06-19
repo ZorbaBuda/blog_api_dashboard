@@ -20,7 +20,7 @@ export default async function BlogViewpage({
 
   const decodedSlug = decodeURIComponent(slug);
 
-  const { blog   }  = await getSingleBlog({ decodedSlug, userId });
+  const  blog  = await getSingleBlog({ decodedSlug, userId });
 
   // console.log("blog", blog);
 
@@ -45,7 +45,7 @@ export default async function BlogViewpage({
         </div>
 
         <div className="mt-4 flex flex-wrap items-center gap-3">
-          {blog.categories.map((categoty : string, i : number) => (
+          {blog.categories.map((categoty, i) => (
             <span
               key={i}
               className="px-2 py-1 border border-gray-400 text-xs font-medium rounded-full"
