@@ -50,7 +50,7 @@ export default function CategoryForm() {
 
     const result = await addCategory({ values });
 
-     console.log("result 🚀", result);
+    //  console.log("result 🚀", result);
 
     if (result.success) {
       toast.success(result.success);

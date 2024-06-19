@@ -1,5 +1,5 @@
 import connect from "@/lib/db";
-import Blog from "@/lib/models/blog";
+import Blog, { IBlogDocument } from "@/lib/models/blog";
 
 
 export async function getSingleBlog({
@@ -12,7 +12,7 @@ export async function getSingleBlog({
 
   await connect() 
 
-  const blog = await Blog.find({userId: userId, slug: decodedSlug})
+  const response  = await Blog.findOne({userId: userId, slug: decodedSlug})
   // const blog = await prisma.blog.findFirst({
   //   where: {
   //     userId: userId,
@@ -20,5 +20,9 @@ export async function getSingleBlog({
   //   },
   // });
 
-  return { blog };
+  // console.log(blog)
+
+   const blog = JSON.parse(JSON.stringify(response))
+
+  return { response };
 }

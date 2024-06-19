@@ -47,8 +47,8 @@ export async function addCategory({ values }: { values: CategoryProps }) {
   //     },
   //   },
   // });
-  console.log(categoryExist)
-  console.log(categoryExist.length)
+  // console.log(categoryExist)
+  // console.log(categoryExist.length)
 
   if (categoryExist.length > 0) {
     return { error: "Category already exists", errorType: "categoryName" };

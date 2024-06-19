@@ -6,6 +6,7 @@ import BackButton from "@/components/back-button";
 import { getAuthSession } from "@/lib/next-auth";
 import { getSingleBlog } from "@/lib/services/queries/get-single-blog";
 import "@/public/styles/blog.css";
+import { IBlogDocument } from "@/lib/models/blog";
 
 export default async function BlogViewpage({
   params: { slug },
@@ -19,7 +20,7 @@ export default async function BlogViewpage({
 
   const decodedSlug = decodeURIComponent(slug);
 
-  const { blog } = await getSingleBlog({ decodedSlug, userId });
+  const { blog   }  = await getSingleBlog({ decodedSlug, userId });
 
   // console.log("blog", blog);
 
@@ -44,7 +45,7 @@ export default async function BlogViewpage({
         </div>
 
         <div className="mt-4 flex flex-wrap items-center gap-3">
-          {blog.categories.map((categoty, i) => (
+          {blog.categories.map((categoty : string, i : number) => (
             <span
               key={i}
               className="px-2 py-1 border border-gray-400 text-xs font-medium rounded-full"

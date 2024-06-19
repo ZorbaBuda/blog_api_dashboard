@@ -47,44 +47,20 @@ export async function addBlog({ values }: { values: BlogProps }) {
 
   await connect()
 
-  // const titleExist = await Blog.find({
-  //   where: {
-  //     title: {
-  //       equals: escapedTitle,
-  //       mode: "insensitive",
-  //     },
-  //     AND: {
-  //       userId,
-  //     },
-  //   },
-  // });
-
-  const titleExist = await Blog.find({escapedTitle, userId})
-  console.log(titleExist)
-
-  if (titleExist.length > 0) {
+  const titleExist = await Blog.findOne({title:escapedTitle, userId: userId})
+  
+  if (titleExist) {
     return { error: "Title already exists", errorType: "title" };
   }
 
-  const slugExist = await Blog.find({
-    where: {
-      slug: {
-        equals: escapedSlug,
-        mode: "insensitive",
-      },
-      AND: {
-        userId,
-      },
-    },
-  });
-
-  if (slugExist.length > 0) {
+  const slugExist = await Blog.findOne({slug: escapedSlug, userId: userId });
+  
+  if (slugExist) {
     return { error: "Slug already exists", errorType: "slug" };
   }
 
   try {
-    const response = await Blog.create({
-    
+    const response  = await Blog.create({
         title,
         slug,
         body,
@@ -102,42 +78,21 @@ export async function addBlog({ values }: { values: BlogProps }) {
       
     });
 
-    console.log(response, '😜')
-
     if (response.id) {
-      const imageExist = await Media.find({
-        where: {
-          imageUrl: featuredImage.imageUrl,
-          AND: {
-            userId: userId,
-          },
-        },
-      });
+      const imageExist = await Media.find({imageUrl: featuredImage.imageUrl, userId: userId });
+
 
       const responseMedia =
-        !(imageExist.length > 0)  &&
+        !(imageExist)  &&
         (await Media.create({
-         
             ...featuredImage,
             userId: userId,
-        
         }));
 
       if (bodyImages) {
         const imagesUrl = bodyImages.map((image) => image.imageUrl);
 
-        const imagesExist = await Media.find({
-          where: {
-            imageUrl: {
-              in: imagesUrl,
-            },
-            AND: {
-              userId: userId,
-            },
-          },
-        });
-
-        // console.log("imagesExist", imagesExist);
+        const imagesExist = await Media.find({imageUrl : imagesUrl,  userId: userId});
 
         const imagesToSubmit = bodyImages
           .filter(
@@ -150,22 +105,22 @@ export async function addBlog({ values }: { values: BlogProps }) {
 
         const responseMedias =
           imagesToSubmit.length > 0 &&
-          (await Media.create({
-            data: imagesToSubmit,
-          }));
+          (await Media.create({imagesToSubmit }));
 
         console.log("response media", responseMedias);
       }
-    }
+     }
 
     revalidatePath("/", "layout");
 
+     const result = JSON.parse(JSON.stringify(response))
+
     return {
       success: "Blog created successfully",
-      data: response,
+       data: result,
     };
   } catch (error) {
-    // return { error: "Something went wrong", data: error };
-    console.log(error)
+     return { error: "Something went wrong", data: error };
+   
   }
 }

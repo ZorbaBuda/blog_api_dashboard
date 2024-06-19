@@ -76,7 +76,7 @@ export default function AddBlogForm({
 
     const result = await addBlog({ values });
 
-    // console.log("result", result);
+  console.log("result ❤", result);
 
     if (result.success) {
       toast.success(result.success);
