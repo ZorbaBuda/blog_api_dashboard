@@ -25,32 +25,33 @@ export async function getBlogs({
   const escapedTitle = title && escapeStringRegexp(title);
 
   const sortCase = () => {
+    const orderByNum = orderBy == "asc" ? 1 : -1
     switch (sortBy) {
       case "title":
         return {
-          title: orderBy,
+          title: orderByNum,
         };
       case "author":
         return {
-          author: orderBy,
+          author: orderByNum,
         };
       case "metaDescription":
         return {
-          metaDescription: orderBy,
+          metaDescription: orderByNum,
         };
       case "views":
         return {
           blogViews: {
-            _count: orderBy,
+            _count: orderByNum,
           },
         };
       case "status":
         return {
-          published: orderBy,
+          published: orderByNum,
         };
       case "created at":
         return {
-          createdAt: orderBy,
+          createdAt: orderByNum,
         };
 
       default:
@@ -60,61 +61,73 @@ export async function getBlogs({
 
   const sorting = sortCase() as any;
 
+  // console.log(sortBy)
+  // console.log(orderBy)
+  // console.log(sorting)
+
   const take = limitNumber || PER_PAGE;
   const skip = (currentPage - 1) * (limitNumber || PER_PAGE) || 0;
 
   await connect()
 
-  const blogs = await Blog.find({
-    orderBy: sorting || {
-      createdAt: "desc",
-    },
-    where: {
-      userId: userId,
-      title: {
-        startsWith: escapedTitle,
-        mode: "insensitive",
-      },
-    },
-    select: {
-      id: true,
-      slug: true,
-      title: true,
-      author: true,
-      metaDescription: true,
-      published: true,
-      createdAt: true,
-      updatedAt: true,
-      categories: true,
-      _count: {
-        select: {
-          blogViews: true,
-        },
-      },
-      featuredImage: {
-        select: {
-          imageUrl: true,
-          imageTitle: true,
-          altText: true,
-        },
-      },
-    },
+  const blogsResponse = await Blog.find({userId: userId})
+  .skip(skip)
+  .limit(take)
+  .sort(sorting)
 
-    take: take,
-    skip: skip,
-  });
+  // console.log(' 😒', blogsResponse)
+  // const blogs = await Blog.find({
+  //   orderBy: sorting || {
+  //     createdAt: "desc",
+  //   },
+  //   where: {
+  //     userId: userId,
+  //     title: {
+  //       startsWith: escapedTitle,
+  //       mode: "insensitive",
+  //     },
+  //   },
+  //   select: {
+  //     id: true,
+  //     slug: true,
+  //     title: true,
+  //     author: true,
+  //     metaDescription: true,
+  //     published: true,
+  //     createdAt: true,
+  //     updatedAt: true,
+  //     categories: true,
+  //     _count: {
+  //       select: {
+  //         blogViews: true,
+  //       },
+  //     },
+  //     featuredImage: {
+  //       select: {
+  //         imageUrl: true,
+  //         imageTitle: true,
+  //         altText: true,
+  //       },
+  //     },
+  //   },
+
+  //   take: take,
+  //   skip: skip,
+  // });
 
   // console.log("blogs", blogs);
 
-  const blogsCount = await Blog.countDocuments({
-    where: {
-      userId: userId,
-      title: {
-        startsWith: escapedTitle,
-        mode: "insensitive",
-      },
-    },
-  });
+   const blogsCount = await Blog.countDocuments({userId : userId});
+
+  // const blogsCount = await Blog.countDocuments({
+  //   where: {
+  //     userId: userId,
+  //     title: {
+  //       startsWith: escapedTitle,
+  //       mode: "insensitive",
+  //     },
+  //   },
+  // });
 
 //   const blogsCount = await prisma.blog.count({
 //     where: {
@@ -125,6 +138,8 @@ export async function getBlogs({
 //       },
 //     },
 //   });
+
+const blogs = JSON.parse(JSON.stringify(blogsResponse))
 
   return { blogs, blogsCount };
 }

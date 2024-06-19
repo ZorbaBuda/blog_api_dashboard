@@ -1,6 +1,8 @@
 "use client";
 
-import type { Blog, Category } from "@prisma/client";
+// import type { Blog, Category } from "@prisma/client";
+import { IBlogDocument } from "@/lib/models/blog";
+import { ICategoryDocument } from "@/lib/models/category";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -16,15 +18,15 @@ import { InputField } from "@/components/form-fields/input-field";
 import { TextEditorField } from "@/components/form-fields/text-editor-field";
 import ImageUploadModal from "@/components/modals/image-upload-modal";
 import { BlogProps, blogSchema } from "@/schemas/blog-schema";
-import { editBlog } from "@/db/user/mutations/edit-blog";
+import { editBlog } from "@/lib/services/mutations/edit-blog";
 import { getDescription } from "@/utils/get-description";
 
 export default function EditBlogForm({
   categories,
   blog,
 }: {
-  categories: Category[];
-  blog: Blog;
+  categories: ICategoryDocument[];
+  blog: IBlogDocument;
 }) {
   const [showImageModal, setShowImageModal] = useState(false);
   const router = useRouter();
@@ -73,7 +75,8 @@ export default function EditBlogForm({
   }, [body, setValue]);
 
   const onSubmit = async (values: BlogProps) => {
-    // console.log("values", values);
+     console.log("blogId ", blog._id);
+     console.log(blog)
     const result = await editBlog({ values, blogId: blog.id });
 
     console.log("result", result);

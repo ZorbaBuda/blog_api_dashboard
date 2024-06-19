@@ -15,14 +15,15 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { DeleteModal } from "@/components/modals/delete-modal";
-// import { deleteBlog } from "@/db/user/mutations/delete-blog";
+ import { deleteBlog } from "@/lib/services/mutations/delete-blog";
+import { IBlogDocument } from "@/lib/models/blog";
 
 interface BlogAction<TData> {
   row: Row<TData>;
 }
 
 export function BlogAction<TData>({ row }: BlogAction<TData>) {
-  // const blog = row.original as Blog;
+  const blog = row.original as IBlogDocument;
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -31,20 +32,20 @@ export function BlogAction<TData>({ row }: BlogAction<TData>) {
     // console.log("delete id", category.id);
     setIsDeleting(true);
 
-    // const result = await deleteBlog({ deleteId: blog.id });
+     const result = await deleteBlog({ deleteId: blog.id });
 
   //   console.log("result", result);
 
-  //   if (result?.success) {
-  //     toast.success(result.success);
-  //   } else if (result?.error) {
-  //     toast.error(result.error);
-  //   } else {
-  //     toast.error("Error");
-  //   }
+    if (result?.success) {
+      toast.success(result.success);
+    } else if (result?.error) {
+      toast.error(result.error);
+    } else {
+      toast.error("Error");
+    }
 
-  //   setShowDeleteModal(false);
-  //   setIsDeleting(false);
+    setShowDeleteModal(false);
+    setIsDeleting(false);
    };
 
   return (
@@ -60,21 +61,21 @@ export function BlogAction<TData>({ row }: BlogAction<TData>) {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-[160px]">
-          {/* <Link href={`/blog/view/${blog.slug}`}>
+          <Link href={`/blog/view/${blog.slug}`}>
             <DropdownMenuItem>
               <Eye className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
               View
             </DropdownMenuItem>
-          </Link> */}
+          </Link>
 
           <DropdownMenuSeparator />
 
-          {/* <Link href={`/blog/edit-blog/${blog.slug}`}>
+          <Link href={`/blog/edit-blog/${blog.slug}`}>
             <DropdownMenuItem>
               <Edit className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
               Edit
             </DropdownMenuItem>
-          </Link> */}
+          </Link>
 
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={() => setShowDeleteModal(true)}>
@@ -84,14 +85,14 @@ export function BlogAction<TData>({ row }: BlogAction<TData>) {
         </DropdownMenuContent>
       </DropdownMenu>
 
-      {/* <DeleteModal
+      <DeleteModal
         key={blog.id}
         showDeleteModal={showDeleteModal}
         setShowDeleteModal={setShowDeleteModal}
         title={`Do you want to delete "${blog.title}"?`}
         handleDelete={handleDelete}
         isPending={isDeleting}
-      /> */}
+      />
     </>
   );
 }

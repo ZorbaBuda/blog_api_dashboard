@@ -75,7 +75,7 @@ export interface IBlog  {
      body: string,
   author:string,
   metaDescription:string,
-  categories: String[],
+  categories: string[],
     published: boolean,
     bodyImages?: string[],
     featuredImage: FeaturedImage,

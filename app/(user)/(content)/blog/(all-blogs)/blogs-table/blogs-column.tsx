@@ -6,9 +6,10 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header";
 import { ClientFormattedDate } from "@/components/formats/client-formatted-date";
 import { BlogAction } from "./blog-action";
- import { BlogQueryProps } from "@/db/user/queries/get-blogs";
+//  import { BlogQueryProps } from "@/db/user/queries/get-blogs";
+ import { IBlogDocument } from "@/lib/models/blog";
 
-export const blogsColumn: ColumnDef<BlogQueryProps>[] = [
+export const blogsColumn: ColumnDef<IBlogDocument>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -60,19 +61,20 @@ export const blogsColumn: ColumnDef<BlogQueryProps>[] = [
       <div className="w-[400px]">{row.getValue("metaDescription")}</div>
     ),
   },
-  {
-    accessorKey: "_count.blogViews",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Views" manualSort />
-    ),
-    cell: ({
-      row: {
-        original: {
-          _count: { blogViews },
-        },
-      },
-    }) => <div>{blogViews}</div>,
-  },
+  //TODO blogviews?
+  // {
+  //   accessorKey: "_count.blogViews",
+  //   header: ({ column }) => (
+  //     <DataTableColumnHeader column={column} title="Views" manualSort />
+  //   ),
+  //   cell: ({
+  //     row: {
+  //       original: {
+  //         _count: { blogViews },
+  //       },
+  //     },
+  //   }) => <div>{blogViews}</div>,
+  // },
   {
     accessorKey: "published",
     header: ({ column }) => (
