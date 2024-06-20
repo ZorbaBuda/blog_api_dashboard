@@ -26,7 +26,7 @@ export async function getSingleBlog({
    if(!blog) return null
 
    
-  //  const blog = JSON.parse(JSON.stringify(response))
+    const blog1 = JSON.parse(JSON.stringify(blog))
 
-  return  blog ;
+  return  blog1 ;
 }

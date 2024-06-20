@@ -69,9 +69,14 @@ export async function editBlog({
   }
 
   try {
-    const response = await Blog.findOneAndUpdate({id: blogId,  userId:userId, data });
+    // const blog = await Blog.findById(blogId)
+    // console.log(blogId)
+    // console.log("😒",blog)
 
-    
+    const response = await Blog.findOneAndUpdate({_id: blogId,  userId : userId}, data, {new: true});
+
+    // console.log(data)
+    // console.log('❤',response)
 
     if (response && response.id) {
       const imageExist = await Media.findOne({imageUrl: featuredImage.imageUrl, userId : userId})

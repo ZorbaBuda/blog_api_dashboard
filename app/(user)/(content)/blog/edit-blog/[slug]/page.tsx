@@ -25,6 +25,8 @@ export default async function EditBlogPage({
 
   const  blog  = await getSingleBlog({ decodedSlug, userId });
 
+  // console.log(blog)
+
   if (!blog) {
     notFound();
   }
