@@ -64,6 +64,7 @@ export default function ImageLibrary({
                       onClick={() => handleImageClick(media)}
                     >
                       <Image
+                        key={media.id}
                         src={media.imageUrl}
                         alt={media.altText}
                         fill

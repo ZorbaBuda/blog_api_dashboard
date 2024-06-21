@@ -34,7 +34,7 @@ export function CategoryAction<TData>({ row }: CategoryAction<TData>) {
     // console.log("delete id", category.id);
     setIsDeleting(true);
 
-    const result = await deleteCategory({ deleteId: category.id });
+    const result = await deleteCategory({ deleteId: category._id as string });
 
     console.log("result", result);
 

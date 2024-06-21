@@ -57,8 +57,9 @@ export function EditCategoryModal({
   const onSubmit = async (values: CategoryProps) => {
     // console.log("values", values);
     // return;
+    // console.log(category)
 
-    const result = await editCategory({ categoryId: category.id, values });
+    const result = await editCategory({ categoryId: category._id as string, values });
 
     console.log("result", result);
 

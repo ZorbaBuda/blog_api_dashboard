@@ -28,14 +28,7 @@ export async function deleteCategory({
   
   if (typeof deleteId === "string") {
     try {
-      const response = await Category.deleteOne({
-        where: {
-          id_userId: {
-            id: deleteId,
-            userId,
-          },
-        },
-      });
+      const response = await Category.findByIdAndDelete(deleteId)
 
       revalidatePath("/", "layout");
 
@@ -60,11 +53,13 @@ export async function deleteCategory({
         },
       });
 
+      const result = JSON.parse(JSON.stringify(response))
+
       revalidatePath("/", "layout");
 
       return {
         success: `${deleteId.length} categories deleted`,
-        data: response,
+        data: result,
       };
     } catch (error) {
       return { error: "Something went wrong", data: error };

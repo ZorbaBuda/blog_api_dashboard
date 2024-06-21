@@ -75,8 +75,8 @@ export default function EditBlogForm({
   }, [body, setValue]);
 
   const onSubmit = async (values: BlogProps) => {
-     console.log("blogId ", blog._id, typeof(blog._id));
-     console.log(blog)
+    //  console.log("blogId ", blog._id, typeof(blog._id));
+    //  console.log(blog)
     const result = await editBlog({ values, blogId: blog._id as string });
 
     console.log("result", result);

@@ -44,64 +44,57 @@ export async function editCategory({
 
   await connect()
 
-  const categoryExists = await Category.find({
-    where: {
-      categoryName: {
-        equals: escapedCategoryName,
-        mode: "insensitive",
-      },
-      AND: {
-        userId,
-      },
-      NOT: {
-        id: categoryId,
-      },
-    },
+  const categoryExists = await Category.findOne({
+    categoryName : escapedCategoryName,
+    userId : userId,
+    id : {"$ne" : categoryId}
   });
-
+ 
   if (categoryExists) {
     return { error: "Category already exists", errorType: "categoryName" };
   }
 
-  const slugExist = await Category.find({
-    where: {
-      slug: {
-        equals: escapedSlug,
-        mode: "insensitive",
-      },
-      AND: {
-        userId,
-      },
-      NOT: {
-        id: categoryId,
-      },
-    },
+  const slugExist = await Category.findOne({
+    slug : escapedSlug,
+    userId : userId,
+    id : {"$ne" : categoryId}
   });
+
+  //TODO using insensitive quering?
+  // const slugExist = await Category.find({
+  //   where: {
+  //     slug: {
+  //       equals: escapedSlug,
+  //       mode: "insensitive",
+  //     },
+  //     AND: {
+  //       userId,
+  //     },
+  //     NOT: {
+  //       id: categoryId,
+  //     },
+  //   },
+  // });
 
   if (slugExist) {
     return { error: "Category slug already exists", errorType: "slug" };
   }
 
   try {
-    const response = await Category.updateOne({
-      where: {
-        id_userId: {
-          id: categoryId,
-          userId: userId,
-        },
-      },
-      data: {
-        categoryName,
-        slug,
-        description,
-      },
-    });
+    const response = await Category.findOneAndUpdate({
+      _id : categoryId,
+      userId : userId},
+      data,
+      { new : true});
+
 
     revalidatePath("/", "layout");
 
+    const result = JSON.parse(JSON.stringify(response))
+
     return {
       success: "Category updated successfully",
-      data: response,
+      data: result,
     };
   } catch (error) {
     return { error: "Something went wrong", data: error };

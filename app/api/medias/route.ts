@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
+import connect from "@/lib/db";
+import Media from "@/lib/models/media";
 import { getAuthSession } from "@/lib/next-auth";
 
 export const dynamic = "force-dynamic";
@@ -14,15 +15,9 @@ export async function GET() {
   const userId = session.user.id;
 
   try {
-    const medias = await prisma.media.findMany({
-      where: {
-        userId: userId,
-      },
-      orderBy: {
-        createdAt: "desc",
-      },
-    });
-
+    const medias = await Media.find({ userId: userId})
+    .sort({createdAt : -1}) 
+    
     return NextResponse.json({ success: true, data: medias });
   } catch (error) {
     console.log("error", error);

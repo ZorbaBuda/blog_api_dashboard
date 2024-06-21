@@ -61,7 +61,7 @@ export async function editBlog({
     return { error: "Title already exists", errorType: "title" };
   }
 
-  const slugExist = await Blog.findOne({slug: escapedTitle, userId : userId, id: {"$ne" : blogId}});
+  const slugExist = await Blog.findOne({slug: escapedSlug, userId : userId, id: {"$ne" : blogId}});
    
 
   if (slugExist) {
