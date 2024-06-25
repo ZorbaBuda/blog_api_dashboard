@@ -75,7 +75,9 @@ export interface IBlog  {
      body: string,
   author:string,
   metaDescription:string,
-  categories: string[],
+  category: string,
+  categorySlug: string,
+  tags?: string[]
     published: boolean,
     bodyImages?: string[],
     featuredImage: FeaturedImage,
@@ -98,7 +100,9 @@ const BlogSchema = new Schema<IBlogDocument>(
   published: {type: Boolean},
   bodyImages: { type: [String]},
   featuredImage: { type: Object},
-  categories: {type: [String]}
+  category: {type: String},
+  categorySlug: {type: String},
+  tags: {type: [String]}
 }
 ,{
   timestamps: true

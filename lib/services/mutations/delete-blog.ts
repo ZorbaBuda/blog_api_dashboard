@@ -29,14 +29,17 @@ export async function deleteBlog({
 
   if (typeof deleteId === "string") {
     try {
-      const response = await Blog.delete({
-        where: {
-          id_userId: {
-            id: deleteId,
-            userId: userId,
-          },
-        },
-      });
+      await connect()
+
+      console.log(deleteId)
+      const response = await Blog.findByIdAndDelete(deleteId)
+      //   where: {
+      //     id_userId: {
+      //       id: deleteId,
+      //       userId: userId,
+      //     },
+      //   },
+      // });
 
       revalidatePath("/", "layout");
 
@@ -51,7 +54,7 @@ export async function deleteBlog({
 
   if (Array.isArray(deleteId)) {
     try {
-      const response = await prisma.blog.deleteMany({
+      const response = await Blog.deleteMany({
         where: {
           id: {
             in: deleteId,
@@ -60,11 +63,14 @@ export async function deleteBlog({
         },
       });
 
+      const result = JSON.parse(JSON.stringify(response))
+
+
       revalidatePath("/", "layout");
 
       return {
         success: `${deleteId.length} blogs deleted`,
-        data: response,
+        data: result,
       };
     } catch (error) {
       return { error: "Something went wrong", data: error };

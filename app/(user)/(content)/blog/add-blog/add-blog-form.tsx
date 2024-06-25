@@ -19,7 +19,15 @@ import { addBlog } from "@/lib/services/mutations/add-blog";
 import { BlogProps, blogSchema } from "@/schemas/blog-schema";
 import { getDescription } from "@/utils/get-description";
 import { ICategoryDocument } from "@/lib/models/category";
-
+import { RadioField } from "@/components/form-fields/radio-field";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import SelectFieldTest from "@/components/form-fields/select-field-test";
 export default function AddBlogForm({
   categories,
 }: {
@@ -32,7 +40,7 @@ export default function AddBlogForm({
     title: "",
     body: "",
     author: "",
-    categories: [],
+    category: "",
     featuredImage: {},
     bodyImage: [],
     metaDescription: "",
@@ -165,7 +173,51 @@ export default function AddBlogForm({
                 type="text"
                 required
               />
+
               <div className="relative">
+              <p className="font-medium mb-2">Category:</p>
+              <SelectFieldTest 
+                   name={"category"}
+                   categories = { categories}
+                />
+                  {/* {categories.length ? (
+                    categories.map((category) => (
+                       <SelectItem 
+                        key={category.id}
+                        value={category.categoryName}
+                        />
+                    ))
+                  ) : (
+                    <p>No categories found</p>
+                  )} */}
+              
+                </div>
+
+                <div className="relative">
+                <p className="font-medium mb-2">NOT WORKING Tags:</p>
+              
+                <div className="flex flex-wrap gap-x-5 gap-y-3">
+                  {categories.length ? (
+                    categories.map((category) => (
+                      <RadioField
+                        key={category.id}
+                        label={category.categoryName}
+                        name="categories"
+                        //  value={category.categoryName}
+                      />
+                    ))
+                  ) : (
+                    <p>No categories found</p>
+                  )}
+                </div>
+                {errors["category"] && (
+                  <p className="absolute mt-0.5 text-sm text-red-600">
+                    {errors["category"]?.message?.toString()}
+                  </p>
+                )}
+              </div>
+
+              {/* <div className="relative">
                 <p className="font-medium mb-2">Category:</p>
                 <div className="flex flex-wrap gap-x-5 gap-y-3">
                   {categories.length ? (
@@ -181,12 +233,12 @@ export default function AddBlogForm({
                     <p>No categories found</p>
                   )}
                 </div>
-                {errors["categories"] && (
+                {errors["category"] && (
                   <p className="absolute mt-0.5 text-sm text-red-600">
-                    {errors["categories"]?.message?.toString()}
+                    {errors["category"]?.message?.toString()}
                   </p>
                 )}
-              </div>
+              </div> */}
 
               <div className="relative">
                 <p className="mb-2 font-medium">Featured Image:</p>

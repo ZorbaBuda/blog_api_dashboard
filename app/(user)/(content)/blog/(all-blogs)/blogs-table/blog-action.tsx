@@ -31,8 +31,10 @@ export function BlogAction<TData>({ row }: BlogAction<TData>) {
   const handleDelete = async () => {
     // console.log("delete id", category.id);
     setIsDeleting(true);
-
-     const result = await deleteBlog({ deleteId: blog.id });
+// TODO multiple deletings
+    //  const result = await deleteBlog({ deleteId: blog.id });
+  //for the moment, single delete
+     const result = await deleteBlog({ deleteId: blog._id as string});
 
   //   console.log("result", result);
 

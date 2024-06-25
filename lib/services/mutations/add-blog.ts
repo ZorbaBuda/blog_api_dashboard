@@ -35,7 +35,7 @@ export async function addBlog({ values }: { values: BlogProps }) {
     slug,
     body,
     author,
-    categories,
+    category,
     featuredImage,
     metaDescription,
     published,
@@ -65,7 +65,7 @@ export async function addBlog({ values }: { values: BlogProps }) {
         slug,
         body,
         author,
-        categories,
+        category,
         metaDescription,
         published,
         featuredImage: {

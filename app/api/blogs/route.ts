@@ -8,7 +8,7 @@ export async function GET() {
   try {
     await connect()
     const blogs = await Blog.find({published : true})
-    .sort({createdAt : 1})
+    .sort({createdAt : -1})
      
     return new NextResponse(JSON.stringify(blogs), {status : 200})
     // return NextResponse.json(

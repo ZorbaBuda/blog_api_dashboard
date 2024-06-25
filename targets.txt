@@ -1,0 +1,20 @@
+Grosso modo, podemos hablar de las siguientes areas de expertise:
+
+- frontend
+- backend : 
+        - API
+        - BBDD
+- devops
+- SEO/marketing
+
+1) El area de interes inmediato, debe ser devops y SEO.
+   Partiendo de un backend y un frontend básicos (administrar posts, almacenamiento en mongo y 
+   consumirlos desde un cliente), desarrollar lo siguiente:
+      - utilizar docker
+      - despliegue en VPS, idealmente utilizando CI/CD 
+      - instalacion y gestion de MONGO en el VPS
+      - adquirir un dominio
+      - evaluar el funcionamiento del SEO
+
+2) una vez adquirido dominio en esto, la parte "facil" es el frontend. Ahí es donde ya se puede dedicar esfuerzo
+   a ello. 

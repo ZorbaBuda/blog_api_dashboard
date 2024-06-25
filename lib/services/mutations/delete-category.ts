@@ -25,7 +25,7 @@ export async function deleteCategory({
   const userId = session.user.id;
 
   await connect()
-  
+  // TODO what abot grouped deletings?
   if (typeof deleteId === "string") {
     try {
       const response = await Category.findByIdAndDelete(deleteId)

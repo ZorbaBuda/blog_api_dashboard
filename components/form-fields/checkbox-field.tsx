@@ -19,6 +19,7 @@ export function CheckboxField({ name, label }: CheckboxFieldProps) {
         className="accent-primary"
       /> */}
 
+
       <Controller
         name={name}
         control={control}
