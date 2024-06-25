@@ -45,6 +45,12 @@ export default async function BlogViewpage({
         </div>
 
         <div className="mt-4 flex flex-wrap items-center gap-3">
+          <span className="px-2 py-1 border border-gray-400 text-xs font-medium rounded-full">
+            {blog.category}
+          </span>
+        </div>
+
+        {/* <div className="mt-4 flex flex-wrap items-center gap-3">
           {blog.categories.map((categoty, i) => (
             <span
               key={i}
@@ -53,7 +59,7 @@ export default async function BlogViewpage({
               {categoty}
             </span>
           ))}
-        </div>
+        </div> */}
 
         <h1 className="mt-4 text-2xl lg:text-4xl font-bold">{blog.title}</h1>
 

@@ -20,14 +20,7 @@ import { BlogProps, blogSchema } from "@/schemas/blog-schema";
 import { getDescription } from "@/utils/get-description";
 import { ICategoryDocument } from "@/lib/models/category";
 import { RadioField } from "@/components/form-fields/radio-field";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import SelectFieldTest from "@/components/form-fields/select-field-test";
+import SelectField from "@/components/form-fields/select-field";
 export default function AddBlogForm({
   categories,
 }: {
@@ -41,6 +34,7 @@ export default function AddBlogForm({
     body: "",
     author: "",
     category: "",
+    categorySlug: "",
     featuredImage: {},
     bodyImage: [],
     metaDescription: "",
@@ -64,6 +58,7 @@ export default function AddBlogForm({
   const body = watch("body");
   const published = watch("published");
   const featuredImage = watch("featuredImage");
+  const category = watch("category")
 
   useEffect(() => {
     if (title) {
@@ -78,6 +73,14 @@ export default function AddBlogForm({
       setValue("metaDescription", shortDescription);
     }
   }, [body, setValue]);
+
+  //Added to test slugify of category on adding blog
+  useEffect(() => {
+    if (category) {
+     const categorySlug = slugify(category, { lower : true})
+    setValue("categorySlug", categorySlug)
+    }
+  }), [category, setValue]
 
   const onSubmit = async (values: BlogProps) => {
     // console.log("values", values);
@@ -176,7 +179,7 @@ export default function AddBlogForm({
 
               <div className="relative">
               <p className="font-medium mb-2">Category:</p>
-              <SelectFieldTest 
+              <SelectField
                    name={"category"}
                    categories = { categories}
                 />

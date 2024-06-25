@@ -14,7 +14,7 @@ type SelectFieldProps = {
     categories : ICategoryDocument[]
 }
 
-export default function SelectFieldTest({name, categories} : SelectFieldProps) {
+export default function SelectField({name, categories} : SelectFieldProps) {
     const { control } = useFormContext()
   return (
     <div>

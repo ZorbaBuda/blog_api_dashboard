@@ -20,6 +20,7 @@ import ImageUploadModal from "@/components/modals/image-upload-modal";
 import { BlogProps, blogSchema } from "@/schemas/blog-schema";
 import { editBlog } from "@/lib/services/mutations/edit-blog";
 import { getDescription } from "@/utils/get-description";
+import SelectField from "@/components/form-fields/select-field";
 
 export default function EditBlogForm({
   categories,
@@ -35,9 +36,10 @@ export default function EditBlogForm({
     title: blog.title,
     body: blog.body,
     author: blog.author,
-    categories: blog.categories,
+    category: blog.category,
+    categorySlug: blog.categorySlug,
     featuredImage: blog.featuredImage,
-    bodyImage: blog.categories,
+    bodyImage: blog.bodyImages,
     metaDescription: blog.metaDescription,
     slug: blog.slug,
     published: blog.published,
@@ -59,6 +61,7 @@ export default function EditBlogForm({
   const body = watch("body");
   const published = watch("published");
   const featuredImage = watch("featuredImage");
+  const category = watch("category")
 
   useEffect(() => {
     if (title) {
@@ -73,6 +76,13 @@ export default function EditBlogForm({
       setValue("metaDescription", shortDescription);
     }
   }, [body, setValue]);
+
+  useEffect(() => {
+    if (category) {
+     const categorySlug = slugify(category, { lower : true})
+    setValue("categorySlug", categorySlug)
+    }
+  }), [category, setValue]
 
   const onSubmit = async (values: BlogProps) => {
     //  console.log("blogId ", blog._id, typeof(blog._id));
@@ -168,7 +178,16 @@ export default function EditBlogForm({
                 type="text"
                 required
               />
+
               <div className="relative">
+              <p className="font-medium mb-2">Category:</p>
+              <SelectField
+                   name={"category"}
+                   categories = { categories}
+                />
+                </div>
+
+              {/* <div className="relative">
                 <p className="font-medium mb-2">Category:</p>
                 <div className="flex flex-wrap gap-x-5 gap-y-3">
                   {categories.length ? (
@@ -189,7 +208,7 @@ export default function EditBlogForm({
                     {errors["categories"]?.message?.toString()}
                   </p>
                 )}
-              </div>
+              </div> */}
 
               <div className="relative">
                 <p className="mb-2 font-medium">Featured Image:</p>
