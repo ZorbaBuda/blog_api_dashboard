@@ -7,16 +7,24 @@ export async function GET(
   { params }: { params: { categoryName: string } }
 ) {
  
-  const categoryName = params.categoryName;
+  const categoryNameSlug = params.categoryName;
 
   try {
     await connect() 
 
-    const response = await Blog.find({
-        "categories": categoryName
-      }).sort({createdAt : -1})
+    const response = await Blog.find(
+      {categorySlug : categoryNameSlug} )
+     .sort({createdAt : -1})
+
+     //example of search more than one condition same field
+      //  const response = await Blog.find(
+      //   { categorySlug: { $exists: 1 , $eq : categoryNameSlug} })
+      //  .sort({createdAt : -1})
+
+     
 
     if (response) {
+      console.log(response)
       const sentResponse = NextResponse.json(
         { success: true, data: response },
         { status: 200 }

@@ -20,6 +20,8 @@ const connect = async () => {
             dbName: "next14restApi",
             bufferCommands: false
         })
+       // Set `strictQuery` to `true` to omit unknown fields in queries.
+    //    mongoose.set('strictQuery', true); 
         console.log("Connected")
     } catch(error) {
         console.log("Error in connecting to database", error);
