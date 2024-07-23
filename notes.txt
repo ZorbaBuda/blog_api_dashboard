@@ -1,4 +1,27 @@
 
-radix form tutorial 
-https://www.youtube.com/watch?v=26bSDD9IEG4
+1) eliminar toda funcionalidad que no sea necesaria. Siempre disponemos del proyecto original.
+
+2) Dashboard => si
+   Blog => si
+   Categories => si
+   Media => si
+   Message => no
+
+3) Funcionalidades del login:
+  Para mi proyecto solo necesito 
+          1)usuario admin general con acceso a todo 
+            Admin puede ver y borrar todo usuario; usuario normal solo puede ver y borrarse a si mismo
+          2)usuario dependiendo del tipo de website (si voy a crear posts para el blog 1, solo accedo a ello, etc)
+          3)Cuenta demo no necesario, si hiciera falta se puede volver al proyecto original
+          4)mantener por ahora la posibilidad de registro
+
+  Empezar con esta funcionalidad.
+
+4) Evaluar usar docker para containerizar mongo 
+   En caso afirmativo, el reto seria dejar de usar mongo atlas y pasar a la instancia mongo docker en local primero y luego
+   en el servidor remoto. 
+
+5) Una vez resuelta esta parte (registro, login, modificar, eliminar usuario) desde local al servidor ubuntu,
+  pasar al siguiente punto, blogs.
+
 

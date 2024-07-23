@@ -10,7 +10,7 @@ import { AlertDialog, AlertDialogContent } from "@/components/ui/alert-dialog";
 import { Spinner } from "@/components/spinner";
 import { PasswordField } from "@/components/form-fields/password-field";
 import { InputField } from "@/components/form-fields/input-field";
-import { deleteAccount } from "@/db/user/mutations/delete-account";
+// import { deleteAccount } from "@/db/user/mutations/delete-account";
 import {
   DeleteAccountProps,
   deleteAccountSchema,

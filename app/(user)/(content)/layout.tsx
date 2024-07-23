@@ -10,7 +10,7 @@ export default async function UserLayout({
   const session = await getAuthSession();
   const logoUrl = session?.user.logoUrl;
   const username = session?.user.username;
-  const isGuestUser = session?.user.role === "GUEST_USER";
+  // const isGuestUser = session?.user.role === "GUEST_USER";
 
   return (
     <div className="lg:flex">
@@ -20,7 +20,7 @@ export default async function UserLayout({
         <div className="fixed lg:hidden w-full bg-white dark:bg-custom-gray4 shadow-md px-2 h-[70px] flex flex-col justify-center text-end leading-none border-b z-20">
           <div className="">
             <p className="text-xl font-bold text-primary">{username}</p>
-            {isGuestUser && (
+            {/* {isGuestUser && (
               <div className="">
                 <Link
                   href="https://igniteweb.vercel.app"
@@ -30,13 +30,13 @@ export default async function UserLayout({
                   Visit website
                 </Link>
               </div>
-            )}
+            )} */}
           </div>
         </div>
         <div className="hidden lg:flex flex-col justify-center lg:absolute lg:h-[108px] lg:right-7 lg:text-end">
           <div className="leading-none">
             <p className="text-xl font-bold text-primary">{username}</p>
-            {isGuestUser && (
+            {/* {isGuestUser && (
               <div className="">
                 <Link
                   href="https://igniteweb.vercel.app"
@@ -49,7 +49,7 @@ export default async function UserLayout({
                   {`Demo mode. Limited access (view only)`}
                 </p>
               </div>
-            )}
+            )} */}
           </div>
         </div>
 

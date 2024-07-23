@@ -1,6 +1,6 @@
 "use client";
 
-import type { Message } from "@prisma/client";
+// import type { Message } from "@prisma/client";
 import { useState } from "react";
 import { Row } from "@tanstack/react-table";
 import { toast } from "sonner";
@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { DeleteModal } from "@/components/modals/delete-modal";
 import { MessageModal } from "@/components/modals/message-modal";
-import { deleteMessage } from "@/db/user/mutations/delete-message";
+// import { deleteMessage } from "@/db/user/mutations/delete-message";
 
 interface MessageAction<TData> {
   row: Row<TData>;

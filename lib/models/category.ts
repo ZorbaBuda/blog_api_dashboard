@@ -4,6 +4,7 @@ export interface ICategory  {
     categoryName: string,
     slug: string,
     description: string,
+     blogCount: number,
     userId: string
 }
 
@@ -16,6 +17,7 @@ const CategorySchema = new Schema<ICategoryDocument>({
     categoryName: { type: String },
     slug: { type: String},
     description: { type: String},
+    blogCount: { type: Number},
     userId: { type : String}
 }
 ,{

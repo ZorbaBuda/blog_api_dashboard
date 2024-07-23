@@ -18,7 +18,7 @@ export default function UserSigninForm() {
   const searchParams = useSearchParams();
   const callback_url = searchParams.get("callback_url") || "/";
 
-  const [guestIsSubmitting, setGuestIsSubmitting] = useState(false);
+  // const [guestIsSubmitting, setGuestIsSubmitting] = useState(false);
 
   const defaultValues = {
     email: "",
@@ -72,32 +72,32 @@ export default function UserSigninForm() {
     }
   };
 
-  const handleGuestSignin = async () => {
-    setGuestIsSubmitting(true);
+  // const handleGuestSignin = async () => {
+  //   setGuestIsSubmitting(true);
 
-    const response = await signIn("credentials", {
-      email: "",
-      password: "",
-      role: "GUEST_USER",
-      // callbackUrl: callback_url,
-      redirect: false,
-    });
+  //   const response = await signIn("credentials", {
+  //     email: "",
+  //     password: "",
+  //     role: "GUEST_USER",
+  //     // callbackUrl: callback_url,
+  //     redirect: false,
+  //   });
 
-    // console.log("response", response);
+  //   // console.log("response", response);
 
-    if (!response?.error) {
-      console.log("succcess", response);
+  //   if (!response?.error) {
+  //     console.log("succcess", response);
 
-      // router.refresh();
-      // router.push(callback_url);
-      window.location.assign(callback_url);
-    } else {
-      console.log("error", response);
-      toast.error(response.error);
-    }
+  //     // router.refresh();
+  //     // router.push(callback_url);
+  //     window.location.assign(callback_url);
+  //   } else {
+  //     console.log("error", response);
+  //     toast.error(response.error);
+  //   }
 
-    setGuestIsSubmitting(false);
-  };
+  //   setGuestIsSubmitting(false);
+  // };
 
   return (
     <div className="w-full lg:w-[400px] 2xl:w-[473px] px-5 lg:px-10 py-14 lg:py-[68px] rounded-2xl shadow-lg bg-white dark:bg-custom-gray4">
@@ -119,7 +119,9 @@ export default function UserSigninForm() {
               type="submit"
               size="lg"
               className="relative w-full"
-              disabled={isSubmitting || guestIsSubmitting}
+              disabled={isSubmitting}
+
+              // disabled={isSubmitting || guestIsSubmitting}
             >
               {isSubmitting && (
                 <span className="absolute flex items-center left-24 2xl:left-32">
@@ -135,11 +137,11 @@ export default function UserSigninForm() {
               <hr className="w-full" />
             </div>
 
-            <p className="mb-2 text-center text-[15px] font-medium ">
+            {/* <p className="mb-2 text-center text-[15px] font-medium ">
               Sign in as guest
-            </p>
+            </p> */}
 
-            <Button
+            {/* <Button
               type="button"
               size="lg"
               className="relative w-full bg-violet-500 hover:bg-violet-500/90"
@@ -152,7 +154,7 @@ export default function UserSigninForm() {
                 </span>
               )}
               View demo
-            </Button>
+            </Button> */}
 
             <div className="mt-6">
               <p className="text-sm text-gray-600 dark:text-gray-300">

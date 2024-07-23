@@ -10,6 +10,7 @@ export const categorySchema = z.object({
     .min(1, "Slug is required")
     .max(40, "Slug must be atmost 40 characters"),
   description: z.string().min(1, "Description is required"),
+  blogCount : z.string().min(1, "Blog count is required")
 });
 
 export type CategoryProps = z.infer<typeof categorySchema>;

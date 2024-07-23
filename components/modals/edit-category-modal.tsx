@@ -29,6 +29,7 @@ export function EditCategoryModal({
     categoryName: category.categoryName,
     slug: category.slug,
     description: category.description,
+    blogCount : category.blogCount
   };
 
   const form = useForm<CategoryProps>({
@@ -106,6 +107,12 @@ export function EditCategoryModal({
                   label="Slug:"
                   placeholder="Enter category name to get slug"
                 />
+
+               <InputField
+                  name="blogCount"
+                  label="Blog Count:"
+                  placeholder="Enter blog count"
+                /> 
 
                 <TextareaField
                   name="description"

@@ -10,12 +10,19 @@ export default async function middleware(req: NextRequest) {
   const token = (await getToken({ req, secret })) as Session | null;
   // console.log("token from middleware", token);
 
-  const isAdmin =
-    token?.user.role === "ADMIN" || token?.user.role === "GUEST_ADMIN";
+  // const isAdmin =
+  //   token?.user.role === "ADMIN" || token?.user.role === "GUEST_ADMIN";
 
-  // const isUser = token?.user.role === "USER";
-  const isUser =
-    token?.user.role === "USER" || token?.user.role === "GUEST_USER";
+  // // const isUser = token?.user.role === "USER";
+  // const isUser =
+  //   token?.user.role === "USER" || token?.user.role === "GUEST_USER";
+
+  const isAdmin =
+  token?.user.role === "ADMIN";
+
+// const isUser = token?.user.role === "USER";
+const isUser =
+  token?.user.role === "USER" ;
 
   if (pathname.includes("/admin")) {
     //for admin

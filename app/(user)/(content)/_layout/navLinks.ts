@@ -35,11 +35,6 @@ export const navLinks = [
     icon: IconMedia,
   },
   {
-    name: "Message",
-    link: "/message",
-    icon: IconMessage,
-  },
-  {
     name: "APIs",
     link: "/api-endpoints",
     icon: IconServerStack,

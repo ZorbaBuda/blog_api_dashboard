@@ -28,6 +28,12 @@ export async function addCategory({ values }: { values: CategoryProps }) {
 
   const { data } = parsedBody;
   const { categoryName, slug, description } = data;
+  // console.log(data)
+
+  //by default, Categories are created with 0 blogs count
+  const blogCount  = "0"
+ 
+
 
   const escapedCategoryName = escapeStringRegexp(categoryName);
   const escapedSlug = escapeStringRegexp(slug);
@@ -72,13 +78,14 @@ export async function addCategory({ values }: { values: CategoryProps }) {
 
   try {
     const response = await Category.create({
-     
-        categoryName,
-        slug,
-        description,
-        userId,
-   
+        categoryName : categoryName,
+        slug : slug,
+        description : description,
+       blogCount : blogCount,
+        userId : userId
     });
+
+    console.log(response)
 
     revalidatePath("/", "layout");
 
